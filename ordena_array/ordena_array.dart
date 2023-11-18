@@ -20,20 +20,6 @@ int buscaMenor(List<int> list) {
   return menorIndice;
 }
 
-int buscaMaior(List<int> list) {
-  int maior = list[0];
-  int maiorIndice = 0;
-
-  for (var i = 0; i < list.length; i++) {
-    if (list[i] > maior) {
-      maior = list[i];
-      maiorIndice = i;
-    }
-  }
-
-  return maiorIndice;
-}
-
 List<int> ordenaPorIndice(List<int> list) {
   List<int> novaList = [];
 
