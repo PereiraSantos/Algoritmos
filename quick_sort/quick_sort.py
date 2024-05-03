@@ -1,3 +1,5 @@
+import random
+
 def quicksort(array):
     if len(array) < 2:
         return array
@@ -6,5 +8,13 @@ def quicksort(array):
         menores = [i for i in array[1:] if i < pivo]
         maiores = [i for i in array[1:] if i > pivo]
         return quicksort(menores) + [pivo] + quicksort(maiores)
-    
-print(quicksort([10, 5, 2, 3 ,15, 25, 20, 50, 21, 4, 34]))
+
+def gerar_lista():
+    lista_ordenada = []
+
+    for i in range(100):
+        lista_ordenada.append(random.randint(0, 1000))
+
+    return lista_ordenada
+
+print(quicksort(gerar_lista()))
