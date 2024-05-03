@@ -10,11 +10,11 @@ def quicksort(array):
         return quicksort(menores) + [pivo] + quicksort(maiores)
 
 def gerar_lista():
-    lista_ordenada = []
+    lista = []
 
     for i in range(100):
-        lista_ordenada.append(random.randint(0, 1000))
+        lista.append(random.randint(0, 1000))
 
-    return lista_ordenada
+    return lista
 
 print(quicksort(gerar_lista()))
