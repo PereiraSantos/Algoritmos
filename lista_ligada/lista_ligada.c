@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <malloc.h>
+#include <stdbool.h>
 
-typedef int bool;
 typedef int TIPOCHAVE;
 
 typedef struct
@@ -23,7 +23,7 @@ typedef struct
     PONT inicio;
 } LISTA;
 
-void iinicializarLista(LISTA *l)
+void inicializarLista(LISTA *l)
 {
     l->inicio = NULL;
 }
@@ -102,7 +102,7 @@ bool inserirElemento(LISTA *l, REGISTRO reg)
     PONT ant, i;
     i = buscaSequencialExc(l, ch, &ant);
     if (i != NULL)
-        return 0;
+        return false;
     i = (PONT)malloc(sizeof(ELEMENTO));
     i->reg = reg;
     if (ant == NULL)
@@ -116,7 +116,7 @@ bool inserirElemento(LISTA *l, REGISTRO reg)
         ant->prox = i;
     }
 
-    return 1;
+    return true;
 }
 
 bool excluirElemLista(LISTA *l, TIPOCHAVE ch)
@@ -124,14 +124,14 @@ bool excluirElemLista(LISTA *l, TIPOCHAVE ch)
     PONT ant, i;
     i = buscaSequencialExc(l, ch, &ant);
     if (i == NULL)
-        return 0;
+        return false;
     if (ant == NULL)
         l->inicio = i->prox;
     else
         ant->prox = i->prox;
 
     free(i);
-    return 1;
+    return true;
 }
 
 void reinicializarLista(LISTA *l)
