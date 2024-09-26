@@ -26,7 +26,7 @@ void inicializarFila(FILA *f)
     f->nroElem = 0;
 }
 
-int tamanh(FILA *f)
+int tamanho(FILA *f)
 {
     return f->nroElem;
 }
