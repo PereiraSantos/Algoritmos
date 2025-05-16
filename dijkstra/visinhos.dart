@@ -1,71 +1,94 @@
 import 'dart:collection';
 
-List<dynamic> processador = [];
-
 void main(List<String> arguments) {
-  int infinito = double.maxFinite.toInt();
+  List<dynamic> processados = [];
 
-  Map<String, dynamic> grafo = HashMap();
-  Map<String, int> inicio = HashMap();
-  Map<String, int> a = HashMap();
-  Map<String, int> b = HashMap();
-  Map<String, int> fin = HashMap();
+  var grafos = criaGrafo();
+  var custos = criaCustos();
+  var pais = criaPais();
 
-  Map<String, dynamic> custos = HashMap();
-  Map<String, dynamic> pais = HashMap();
-
-  inicio.addAll({'a': 6});
-  inicio.addAll({'b': 2});
-
-  a.addAll({'fim': 1});
-  b.addAll({'a': 3});
-  b.addAll({'fim': 5});
-  fin.addAll({'fim': infinito});
-
-  grafo.addAll({'inicio': inicio});
-  grafo.addAll({'a': fin});
-  grafo.addAll({'b': b});
-  grafo.addAll({'fim': fin});
-
-  custos.addAll({'a': 6});
-  custos.addAll({'b': 2});
-  custos.addAll({'fim': infinito});
-
-  pais.addAll({'a': inicio});
-  pais.addAll({'b': inicio});
-  custos.addAll({'fim': infinito});
-
-  var nodo = acheNoCustoMaisBaixo(custos);
+  String? nodo = acheNoCustoMaisBaixo(custos, processados);
 
   while (nodo != null) {
-    dynamic custo = custos[nodo];
-    dynamic visinhos = grafo[nodo];
+    var custo = custos[nodo];
+    var visinhos = grafos[nodo];
 
-    for (final n in visinhos) {
-      dynamic novoCusto = custo + visinhos[n];
-      if (custos[n]! > novoCusto) {
-        custos[n] = novoCusto;
-        pais[n] = nodo;
-      }
+    if (visinhos == null) {
+      break;
     }
 
-    processador.addAll(nodo as Iterable);
-    nodo = acheNoCustoMaisBaixo(custos);
+    visinhos.forEach((key, value) {
+      var novoCusto = custo + visinhos[key];
+      if (custos[key] > novoCusto) {
+        custos[key] = novoCusto;
+        pais[key] = nodo;
+      }
+    });
+
+    processados.add(nodo);
+    nodo = acheNoCustoMaisBaixo(custos, processados);
   }
+
+  print('pais  : $pais');
+  print('custos: $custos');
 }
 
-acheNoCustoMaisBaixo(Map<String, dynamic> custos) {
+String acheNoCustoMaisBaixo(dynamic custos, List<dynamic> processados) {
   int custoMaisBaixo = double.maxFinite.toInt();
   dynamic nodoCustoMaisBaixo;
 
   custos.forEach((key, value) {
     dynamic custo = value;
 
-    if (custo < custoMaisBaixo && !processador.contains(key)) {
+    if (custo < custoMaisBaixo && !processados.contains(key)) {
       custoMaisBaixo = custo;
-      nodoCustoMaisBaixo = value;
+      nodoCustoMaisBaixo = key;
     }
   });
 
   return nodoCustoMaisBaixo;
 }
+
+Map criaPais() {
+  Map<String, String?> pais = HashMap();
+
+  pais.addAll({'A': 'Inicio'});
+  pais.addAll({'B': 'Inicio'});
+  pais.addAll({'Fim': null});
+
+  return pais;
+}
+
+Map criaGrafo() {
+  Map<String, dynamic> grafos = HashMap();
+
+  Map<String, int> inicio = HashMap();
+  Map<String, int> a = HashMap();
+  Map<String, int> b = HashMap();
+
+  inicio.addAll({'A': 6});
+  inicio.addAll({'B': 2});
+
+  a.addAll({'Fim': 1});
+
+  b.addAll({'A': 3});
+  b.addAll({'Fim': 5});
+
+  grafos.addAll({'Inicio': inicio});
+  grafos.addAll({'A': a});
+  grafos.addAll({'B': b});
+  grafos.addAll({'Fim': null});
+
+  return grafos;
+}
+
+Map criaCustos() {
+  Map<String, int> custos = HashMap();
+
+  custos.addAll({'A': 6});
+  custos.addAll({'B': 2});
+  custos.addAll({'Fim': double.maxFinite.toInt()});
+
+  return custos;
+}
+
