@@ -3,9 +3,9 @@ import 'dart:collection';
 void main(List<String> arguments) {
   List<dynamic> processados = [];
 
-  var grafos = criaGrafo();
-  var custos = criaCustos();
-  var pais = criaPais();
+  var grafos = Grafos().criaGrafo();
+  var custos = Custos().criaCustos();
+  var pais = Pais().criaPais();
 
   String? nodo = acheNoCustoMaisBaixo(custos, processados);
 
@@ -49,46 +49,51 @@ String acheNoCustoMaisBaixo(dynamic custos, List<dynamic> processados) {
   return nodoCustoMaisBaixo;
 }
 
-Map criaPais() {
-  Map<String, String?> pais = HashMap();
+class Grafos {
+  Map criaGrafo() {
+    Map<String, dynamic> grafos = HashMap();
 
-  pais.addAll({'A': 'Inicio'});
-  pais.addAll({'B': 'Inicio'});
-  pais.addAll({'Fim': null});
+    Map<String, int> inicio = HashMap();
+    Map<String, int> a = HashMap();
+    Map<String, int> b = HashMap();
 
-  return pais;
+    inicio.addAll({'A': 6});
+    inicio.addAll({'B': 2});
+
+    a.addAll({'Fim': 1});
+
+    b.addAll({'A': 3});
+    b.addAll({'Fim': 5});
+
+    grafos.addAll({'Inicio': inicio});
+    grafos.addAll({'A': a});
+    grafos.addAll({'B': b});
+    grafos.addAll({'Fim': null});
+
+    return grafos;
+  }
 }
 
-Map criaGrafo() {
-  Map<String, dynamic> grafos = HashMap();
+class Custos {
+  Map criaCustos() {
+    Map<String, int> custos = HashMap();
 
-  Map<String, int> inicio = HashMap();
-  Map<String, int> a = HashMap();
-  Map<String, int> b = HashMap();
+    custos.addAll({'A': 6});
+    custos.addAll({'B': 2});
+    custos.addAll({'Fim': double.maxFinite.toInt()});
 
-  inicio.addAll({'A': 6});
-  inicio.addAll({'B': 2});
-
-  a.addAll({'Fim': 1});
-
-  b.addAll({'A': 3});
-  b.addAll({'Fim': 5});
-
-  grafos.addAll({'Inicio': inicio});
-  grafos.addAll({'A': a});
-  grafos.addAll({'B': b});
-  grafos.addAll({'Fim': null});
-
-  return grafos;
+    return custos;
+  }
 }
 
-Map criaCustos() {
-  Map<String, int> custos = HashMap();
+class Pais {
+  Map criaPais() {
+    Map<String, String?> pais = HashMap();
 
-  custos.addAll({'A': 6});
-  custos.addAll({'B': 2});
-  custos.addAll({'Fim': double.maxFinite.toInt()});
+    pais.addAll({'A': 'Inicio'});
+    pais.addAll({'B': 'Inicio'});
+    pais.addAll({'Fim': null});
 
-  return custos;
+    return pais;
+  }
 }
-
